@@ -1,0 +1,18 @@
+# Development of the app locally
+
+## Goal : develop the web application on your machine
+
+## Pre-conditions : 
+- you have followed the guidelines in readme.txt and the basic web app works before you modify it.
+
+## Guidelines :
+### 1- develop the web app present in src and Webcontent
+### 2- Compile your code
+- Type mvn clean install
+- Verify the build success
+### 3- Reload your server
+- vagrant ssh
+- cd /vagrant_scripts/
+- sudo ./deploy-snapshot
+### 4- See the result
+- Go to the web page you develop : http://192.168.33.14:8080/simpleHelloWorldWebApp/thepageyoudevelop

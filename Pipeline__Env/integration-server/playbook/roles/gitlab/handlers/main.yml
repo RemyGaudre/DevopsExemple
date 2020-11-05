@@ -1,0 +1,5 @@
+---
+- name: restart gitlab
+  command: gitlab-ctl reconfigure && gitlab-ctl restart unicorn && gitlab-ctl restart
+  register: gitlab_restart
+  failed_when: gitlab_restart_handler_failed_when | bool

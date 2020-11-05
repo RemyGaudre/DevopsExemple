@@ -1,0 +1,28 @@
+---
+- name: Check if GitLab Runner configuration file already exists.
+  stat:
+    path: /etc/gitlab-runner/config.toml
+  register: gitlab_runner_config_file
+
+- name: Check if GitLab Runner is already installed.
+  stat:
+    path: /bin/gitlab-runner
+  register: gitlab_runner_file
+
+# Install GitLab Runner and its dependencies.
+- name: Download GitLab Runner repository installation script.
+  get_url:
+    url: "https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh"
+    dest: /tmp/gitlab_runner_install_repository.sh
+    validate_certs: yes
+  when: (gitlab_runner_file.stat.exists == false)
+
+- name: Install GitLab Runner repository
+  command: bash /tmp/gitlab_runner_install_repository.sh
+  when: (gitlab_runner_file.stat.exists == false)
+
+- name: Install GitLab Runner
+  apt:
+    name: gitlab-runner
+    state: latest
+  when: (gitlab_runner_file.stat.exists == false)

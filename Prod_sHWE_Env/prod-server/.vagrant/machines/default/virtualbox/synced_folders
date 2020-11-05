@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant_scripts":{"guestpath":"/vagrant_scripts","hostpath":"/home/mimy/Remy_Gaudre_SEEMiniProject/Prod_sHWE_Env/prod-server/scripts","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/mimy/Remy_Gaudre_SEEMiniProject/Prod_sHWE_Env/prod-server","disabled":false,"__vagrantfile":true}}}

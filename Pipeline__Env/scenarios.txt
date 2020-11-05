@@ -1,0 +1,107 @@
+# Scenario 1
+## Goal
+Create a git repository
+
+## Pre-conditions
+- Gitlab is up and running via the integration server VM
+- A user account has been created
+
+## Main Success Scenario
+1. Log in to GitLab using a NO root account
+2. Create project and name it yourProjectName
+3. Follow the instructions to create the remote and local repositories as indicated by gitlab.
+4. Commit and push to the remote repository.
+
+## Notes
+- In GitLab a project is a repository.
+
+# Scenario 2
+## Goal
+Correctly create a gitlab-runner
+
+## Pre-conditions
+- Gitlab is up and running via the integration server VM
+- Created project repository on gitlab
+
+## Main Success Scenario
+1. Go to project page and go to setting/ CI/CD / Runners and copy the registration token
+2. Connect to the integration server VM with: > vagrant ssh
+3. Create a gitlab-runner with the command: > gitlab-runner register
+4. Configure it with the following specification:
+	- gitlab-ci coordinator URL: http://192.168.33.9/gitlab
+	- gitlab-ci token: yourgitlabregistrationtoken
+	- gitlab-ci description: dockerRunner
+	- gitlab-ci tags: integration
+	- executor: docker
+	- default Docker image: alpine:latest
+5. Then restart the runner with: > sudo gitlab-runner restart
+6. Finally, in GitLab change the configuration of the runner to accept jobs without TAGS.
+
+## Notes
+- None.
+
+# Scenario 3
+
+## Goal
+The pipeline is successfully executed.  
+
+
+## Pre-conditions
+- Up and Run gitlab & gitlab runner
+- Tag for docker runner is specified
+- Created project repository on gitlab
+
+  
+## Main Success Scenario
+1. Clone created repository from gitlab
+2. Add `.gitlab-ci.yml` with following content
+
+```
+image: maven:latest
+
+stages:
+  - echo
+  
+echo_app:
+  stage: echo
+  tags:
+    - docker
+  script:
+    - echo "It works!"
+```
+
+3. Push file to gitlab repository
+4. Go to project's pipelines and wait until the pipeline has finished its execution.
+
+
+## Notes
+- None.
+
+# Scenario 4
+
+## Goal
+The pipeline is running on simpleHelloWorldWebApp
+
+
+## Pre-conditions
+- Up and Run gitlab & gitlab runner
+- You have the simpleHelloWorlWebApp project folder in the localDev_Env folder
+
+  
+## Main Success Scenario
+1. Create a new gitlab project named simpleHelloWordWebApp
+2. Follow the instruction to push an existing folder on the welcome page of this project
+2. Create gitlab-runner:
+	> sudo gitlab-runner register
+	> http://192.168.33.9/gitlab
+	> yourGitlabProjectRegistrationToken
+	> docker
+	> integration
+	> docker
+	> alpine:latest
+	> sudo gitlab-runner restart
+4. Go to project's pipelines and wait until the pipeline has finished its execution.
+
+
+## Notes
+- None.

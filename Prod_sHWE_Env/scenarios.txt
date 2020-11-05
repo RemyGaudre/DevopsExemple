@@ -1,0 +1,16 @@
+# Scenario 1
+## Goal
+Make a change to your project and push change to the production VM
+
+## Pre-conditions
+- Gitlab is up and running via the integration server VM
+- The project pipeline is up and working
+- You succesfully made a first deploy into the production VM following readme.txt.
+
+## Main Success Scenario
+1. Make your change in the project you want and push it into gitlab repository.
+2. Wait until the pipeline deploy to your production VM.
+3. See the result at: http://192.168.33.99:8080/simpleHelloWorldWebApp/
+
+## Notes
+- None.

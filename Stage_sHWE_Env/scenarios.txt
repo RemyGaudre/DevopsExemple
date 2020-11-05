@@ -1,0 +1,42 @@
+# Scenario 1
+## Goal
+Update the project and deploy it in the stage VM to do your test
+
+## Pre-conditions
+- Gitlab is up and running via the integration server VM
+- The project is uploaded in a gitlab repository
+- The pipeline is up and working to deploy into the stage VM following the guidelines in readme.txt.
+
+## Main Success Scenario
+1. Make your change in your project and push modifications to the gitlab repository.
+2. Wait until the pipeline deploy to the stage VM.
+3. See the updated Web Application at: http://192.168.33.17:8080/simpleHelloWorldWebApp/
+
+## Notes
+- None.
+
+# Scenario 2
+## Goal
+Add a test to check if the project is correctly deployed on the stage VM
+
+## Pre-conditions
+- Gitlab is up and running via the integration server VM
+- The pipeline is up and working to deploy into the stage VM following the guidelines in readme.txt.
+
+## Main Success Scenario
+1. Add this to the end of .gitlab-ci.yml file and "testng" to stages:
+#####
+testng:
+  stage: testng
+  tags:
+    - integration
+  services:
+    - name: selenium/standalone-chrome:latest 
+  script:
+    - mvn -f simpleHelloWorldWebApp.testing.testng/pom.xml $MAVEN_CLI_OPTS -Denv.BASEURL=$STAGE_BASE_URL test
+#####
+
+2. See the new pipeline executed which will make tests which are in the simpleHelloWorldWebApp.testing.testng folder.
+
+## Notes
+- None.
